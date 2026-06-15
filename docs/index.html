@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRMSS - Smart Depot Management System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #667eea;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            background: white;
+            padding: 3rem 2rem;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .hero h2 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #f093fb;
+        }
+        
+        .btn-secondary:hover {
+            background: #e074e3;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem auto;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .emoji {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section {
+            background: white;
+            padding: 3rem 2rem;
+            margin: 2rem auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 1rem;
+        }
+        
+        .section h3 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section ul, .section ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .section li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .code-block {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        footer p {
+            margin: 0.5rem 0;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .quick-link {
+            background: #f0f0f0;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        
+        .quick-link:hover {
+            background: #e0e0e0;
+        }
+        
+        .quick-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .quick-link a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav a {
+                display: block;
+                margin: 0.5rem 0;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚌 SRMSS</h1>
+        <p>Smart Depot Management System</p>
+    </header>
+    
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#quick-start">Quick Start</a>
+        <a href="#documentation">Documentation</a>
+        <a href="#api">API Reference</a>
+        <a href="#contact">Contact</a>
+    </nav>
+    
+    <div class="container">
+        <div class="hero">
+            <h2>Fleet Management Made Simple</h2>
+            <p>A comprehensive platform for managing depot operations, vehicle scheduling, GPS tracking, and driver management.</p>
+            <div class="btn-group">
+                <a href="https://github.com/bposhaka-art/SRMSS" class="btn">View on GitHub</a>
+                <a href="https://github.com/bposhaka-art/SRMSS#quick-start" class="btn btn-secondary">Get Started</a>
+                <a href="https://github.com/bposhaka-art/SRMSS/blob/main/README.md" class="btn">Read Docs</a>
+            </div>
+        </div>
+        
+        <section id="features" class="section">
+            <h2>✨ Key Features</h2>
+            <div class="features">
+                <div class="feature-card">
+                    <div class="emoji">🔐</div>
+                    <h3>Role-Based Access</h3>
+                    <p>Admin, Supervisor, and Operator roles with granular permissions and authentication.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="emoji">🚗</div>
+                    <h3>Fleet Management</h3>
+                    <p>Complete vehicle inventory, utilization tracking, and maintenance scheduling.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="emoji">📍</div>
+                    <h3>Live GPS Tracking</h3>
+                    <p>Real-time vehicle tracking on interactive maps with speed monitoring.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="emoji">📅</div>
+                    <h3>Trip Scheduling</h3>
+                    <p>Schedule trips with conflict detection and status management.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="emoji">📊</div>
+                    <h3>Analytics & Reports</h3>
+                    <p>Dashboard with charts, performance metrics, and operational insights.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="emoji">✅</div>
+                    <h3>Approval Workflow</h3>
+                    <p>Manage fuel logs and maintenance requests with approval system.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="quick-start" class="section">
+            <h2>🚀 Quick Start</h2>
+            
+            <h3>Installation</h3>
+            <div class="code-block">
+git clone https://github.com/bposhaka-art/SRMSS.git
+cd SRMSS
+pip install flask
+python app.py
+            </div>
+            <p>Application will run on: <strong>http://localhost:5000</strong></p>
+            
+            <h3>Default Credentials</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Role</th>
+                            <th>Username</th>
+                            <th>Password</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Administrator</td>
+                            <td>admin</td>
+                            <td>admin</td>
+                        </tr>
+                        <tr>
+                            <td>Supervisor</td>
+                            <td>supervisor</td>
+                            <td>super</td>
+                        </tr>
+                        <tr>
+                            <td>Operational Staff</td>
+                            <td>driver</td>
+                            <td>driver</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <section id="technology" class="section">
+            <h2>🛠️ Technology Stack</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h4>Backend</h4>
+                    <ul>
+                        <li>Python 3.x</li>
+                        <li>Flask Web Framework</li>
+                        <li>SQLite Database</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Frontend</h4>
+                    <ul>
+                        <li>HTML5 & CSS3</li>
+                        <li>Vanilla JavaScript</li>
+                        <li>Responsive Design</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Maps & GPS</h4>
+                    <ul>
+                        <li>Leaflet.js</li>
+                        <li>OpenStreetMap</li>
+                        <li>OSRM Routing</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h4>Visualization</h4>
+                    <ul>
+                        <li>Chart.js</li>
+                        <li>Real-time Updates</li>
+                        <li>Interactive Modals</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="documentation" class="section">
+            <h2>📚 Documentation</h2>
+            <h3>Available Resources</h3>
+            <div class="quick-links">
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS/blob/main/README.md">📖 Full README</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS#api-endpoints">🔌 API Reference</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS#database-schema">🗄️ Database Schema</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS#user-roles--permissions">👥 User Roles</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS#troubleshooting">🐛 Troubleshooting</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS#screenshots--workflows">📸 Workflows</a>
+                </div>
+            </div>
+        </section>
+        
+        <section id="api" class="section">
+            <h2>🔌 API Endpoints</h2>
+            <h3>Main Categories</h3>
+            <ul>
+                <li><strong>Authentication:</strong> Login & session management</li>
+                <li><strong>Operations:</strong> Trip scheduling & status management</li>
+                <li><strong>GPS Tracking:</strong> Real-time vehicle locations</li>
+                <li><strong>Fleet Management:</strong> Vehicles, drivers, routes</li>
+                <li><strong>Fuel & Maintenance:</strong> Logs & approval workflow</li>
+                <li><strong>Reports:</strong> Analytics & performance metrics</li>
+            </ul>
+            <p><a href="https://github.com/bposhaka-art/SRMSS#api-endpoints">View all 30+ endpoints →</a></p>
+        </section>
+        
+        <section id="project-structure" class="section">
+            <h2>📁 Project Structure</h2>
+            <div class="code-block">
+SRMSS/
+├── README.md              # Comprehensive documentation
+├── app.py                 # Main Flask application (2,482 lines)
+├── .gitignore            # Git ignore rules
+└── srmss_rbac.db         # SQLite database (auto-created)
+
+app.py contains:
+├── HTML Template (1,063 lines)
+├── Frontend JavaScript (1,000+ lines)
+├── Backend Python (419 lines)
+└── 35+ API endpoints
+            </div>
+        </section>
+        
+        <section id="features-list" class="section">
+            <h2>📋 Complete Feature List</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>Core Features</h3>
+                    <ul>
+                        <li>✅ Role-Based Access Control</li>
+                        <li>✅ User Management</li>
+                        <li>✅ Vehicle Fleet Management</li>
+                        <li>✅ Driver Management</li>
+                        <li>✅ Route Planning & Optimization</li>
+                        <li>✅ Trip Scheduling</li>
+                        <li>✅ Live GPS Tracking</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Operations</h3>
+                    <ul>
+                        <li>✅ Control Center</li>
+                        <li>✅ Fleet Monitoring</li>
+                        <li>✅ Fuel Log Management</li>
+                        <li>✅ Maintenance Tracking</li>
+                        <li>✅ Approval Workflow</li>
+                        <li>✅ Reports & Analytics</li>
+                        <li>✅ Dark/Light Theme</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="section">
+            <h2>📞 Get in Touch</h2>
+            <h3>Repository Information</h3>
+            <div class="quick-links">
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS">⭐ GitHub Repository</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art">👤 Developer Profile</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS/issues">🐛 Report Issues</a>
+                </div>
+                <div class="quick-link">
+                    <a href="https://github.com/bposhaka-art/SRMSS/discussions">💬 Discussions</a>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p><strong>SRMSS - Smart Depot Management System</strong></p>
+        <p>© 2026 bposhaka-art. All rights reserved.</p>
+        <p><a href="https://github.com/bposhaka-art/SRMSS">View on GitHub</a> | <a href="https://github.com/bposhaka-art/SRMSS/blob/main/README.md">Documentation</a></p>
+        <p>Built with ❤️ using Flask, SQLite, and Leaflet.js</p>
+    </footer>
+</body>
+</html>
